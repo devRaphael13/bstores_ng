@@ -14,6 +14,11 @@ import os
 from pathlib import Path
 
 import cloudinary
+import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +45,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "restframework",
     "api",
+    "corsheaders",
+
 ]
 
 MIDDLEWARE = [
@@ -78,10 +86,9 @@ WSGI_APPLICATION = "bstores_ng.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"), conn_max_age=1800
+    ),
 }
 
 
@@ -134,3 +141,6 @@ cloudinary.config(
     api_secret=os.environ.get("API_SECRET"),
     secure=True,
 )
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
