@@ -9,7 +9,7 @@ class ProductSerializer(rs.ModelSerializer):
         fields = "__all__"
 
     def get_new(self, obj):
-        delta = now() - obj.created
+        delta = now().date() - obj.created
 
         if delta.days < 30:
             return True
@@ -17,8 +17,9 @@ class ProductSerializer(rs.ModelSerializer):
     
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep["sizes"] = [size["size"] for size in instance.sizes]
-        rep["colours"] = [colour["name"] for colour in instance.colours]
+        rep["sizes"] = [size.size for size in instance.sizes.all()]
+        rep["colours"] = [colour.name for colour in instance.colours.all()]
+        rep["image"] = instance.image.url
         return rep
 
 class CategorySerializer(rs.ModelSerializer):
