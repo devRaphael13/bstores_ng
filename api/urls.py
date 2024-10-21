@@ -6,7 +6,8 @@ router = DefaultRouter()
 
 router.register("products", v.ProductViewSet)
 router.register("categories", v.CategoryViewSet)
-
+router.register("sizes", v.SizeViewSet)
+router.register("colours", v.ColourViewSet)
 urlpatterns = [
     path("", include(router.urls))
 ]

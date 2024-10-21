@@ -20,4 +20,20 @@ class CategorySerializer(rs.ModelSerializer):
     class Meta:
         model = m.Category
         fields = "__all__"
-        
+
+class SizeSerializer(rs.ModelSerializer):
+    class Meta:
+        model = m.Size
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        return {"size": instance.size}
+    
+class ColourSerializer(rs.ModelSerializer):
+
+    class Meta:
+        model = m.Colour
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        return {"colour": instance.name}

@@ -15,3 +15,9 @@ class CategoryViewSet(ModelViewSet):
     queryset = m.Category.objects.all()
     serializer_class = s.CategorySerializer
 
+class SizeViewSet(ModelViewSet):
+    queryset = m.Size.objects.all()
+    serializer_class = s.SizeSerializer
+class ColourViewSet(ModelViewSet):
+    queryset = m.Colour.objects.all()
+    serializer_class = s.ColourSerializer
