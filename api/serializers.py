@@ -14,6 +14,12 @@ class ProductSerializer(rs.ModelSerializer):
         if delta.days < 30:
             return True
         return False
+    
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep["sizes"] = [size["size"] for size in instance.sizes]
+        rep["colours"] = [colour["name"] for colour in instance.colours]
+        return rep
 
 class CategorySerializer(rs.ModelSerializer):
 
@@ -26,14 +32,8 @@ class SizeSerializer(rs.ModelSerializer):
         model = m.Size
         fields = "__all__"
 
-    def to_representation(self, instance):
-        return {"size": instance.size}
-    
 class ColourSerializer(rs.ModelSerializer):
 
     class Meta:
         model = m.Colour
         fields = "__all__"
-
-    def to_representation(self, instance):
-        return {"colour": instance.name}
