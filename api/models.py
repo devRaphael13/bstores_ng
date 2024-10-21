@@ -37,4 +37,8 @@ class Size(models.Model):
 
 @receiver(pre_save, sender=Size)
 def to_uppercase(sender, instance, **kwargs):
-    instance.size = instance.size.upper()
+    instance.sizes = list(map(str.upper, instance.sizes))
+
+@receiver(pre_save, sender=Colour)
+def capitalize(sender, instance, **kwargs):
+    instance.colours = list(map(str.capitalize, instance.colours)) 
