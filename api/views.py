@@ -17,8 +17,9 @@ class ProductViewSet(ModelViewSet):
 
         category = query.get("category", None)
 
-        if category:
+        if category and category != "All":
             queryset = queryset.filter(category__name=category)
+            
         return queryset
 
 class CategoryViewSet(ModelViewSet):
