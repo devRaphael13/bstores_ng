@@ -20,7 +20,6 @@ class ProductSerializer(rs.ModelSerializer):
         rep["sizes"] = [size.size for size in instance.sizes.all()]
         rep["colours"] = [colour.name for colour in instance.colours.all()]
         rep["image"] = instance.image.url
-        rep["category"] = instance.category.name
         return rep
 
 class CategorySerializer(rs.ModelSerializer):
