@@ -1,7 +1,19 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from . import models as m
 
-admin.site.register(m.Product)
-admin.site.register(m.Category)
-admin.site.register(m.Size)
-admin.site.register(m.Colour)
+@admin.register(m.Product)
+class Product(ModelAdmin):
+    pass
+
+@admin.register(m.Category)
+class Category(ModelAdmin):
+    pass
+
+@admin.register(m.Size)
+class Size(ModelAdmin):
+    pass
+
+@admin.register(m.Colour)
+class Colour(ModelAdmin):
+    pass

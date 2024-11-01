@@ -39,6 +39,11 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -145,3 +150,8 @@ cloudinary.config(
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+UNFOLD = {
+    "SITE_TITLE": "Bstores ng",
+    "SITE_HEADER": "Bstores ng"
+}
