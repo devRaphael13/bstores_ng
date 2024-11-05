@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     "unfold.contrib.filters",
     "unfold.contrib.forms",
     "unfold.contrib.inlines",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -52,8 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "api",
-    "corsheaders",
-
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
@@ -154,4 +152,9 @@ CORS_ALLOW_CREDENTIALS = True
 UNFOLD = {
     "SITE_TITLE": "Bstores ng",
     "SITE_HEADER": "Bstores ng"
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
 }

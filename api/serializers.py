@@ -2,8 +2,16 @@ from rest_framework import serializers as rs
 from django.utils.timezone import now
 from . import models as m
 
-class ProductSerializer(rs.ModelSerializer):
+
+class ReadOnlyModelSerializer(rs.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        setattr(self.Meta, 'read_only_fields', [*self.fields])
+class ProductSerializer(ReadOnlyModelSerializer):
     new = rs.SerializerMethodField()
+    category = rs.SerializerMethodField()
+    sizes = rs.SerializerMethodField()
+    image = rs.SerializerMethodField()
     class Meta:
         model = m.Product
         fields = "__all__"
@@ -15,26 +23,32 @@ class ProductSerializer(rs.ModelSerializer):
             return True
         return False
     
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep["sizes"] = [size.size for size in instance.sizes.all()]
-        rep["colours"] = [colour.name for colour in instance.colours.all()]
-        rep["image"] = instance.image.url
-        rep["category"] = instance.category.name
-        return rep
+    def get_category(self, obj):
+        return obj.category.name
+    
+    def get_sizes(self, obj):
+        sizes = obj.sizes.values("size")
+        return [size["size"] for size in sizes]
+    
+    def get_colours(self, obj):
+        colours = obj.colours.values("name")
+        return [colour for colour in colours]
+    
+    def get_image(self, obj):
+        return obj.image.url
 
-class CategorySerializer(rs.ModelSerializer):
+class CategorySerializer(ReadOnlyModelSerializer):
 
     class Meta:
         model = m.Category
         fields = "__all__"
 
-class SizeSerializer(rs.ModelSerializer):
+class SizeSerializer(ReadOnlyModelSerializer):
     class Meta:
         model = m.Size
         fields = "__all__"
 
-class ColourSerializer(rs.ModelSerializer):
+class ColourSerializer(ReadOnlyModelSerializer):
 
     class Meta:
         model = m.Colour

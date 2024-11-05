@@ -2,13 +2,12 @@
 **************************************** JESUS ****************************************
 """
 
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet
 from . import serializers as s
 from . import models as m
 
-class ProductViewSet(ModelViewSet):
-    queryset = m.Product.objects.all()
+class ProductViewSet(ReadOnlyModelViewSet):
+    queryset = m.Product.objects.select_related("category").prefetch_related("sizes", "colours")
     serializer_class = s.ProductSerializer
 
     def filter_queryset(self, queryset):
@@ -22,13 +21,13 @@ class ProductViewSet(ModelViewSet):
             
         return queryset
 
-class CategoryViewSet(ModelViewSet):
+class CategoryViewSet(ReadOnlyModelViewSet):
     queryset = m.Category.objects.all()
     serializer_class = s.CategorySerializer
 
-class SizeViewSet(ModelViewSet):
+class SizeViewSet(ReadOnlyModelViewSet):
     queryset = m.Size.objects.all()
     serializer_class = s.SizeSerializer
-class ColourViewSet(ModelViewSet):
+class ColourViewSet(ReadOnlyModelViewSet):
     queryset = m.Colour.objects.all()
     serializer_class = s.ColourSerializer
