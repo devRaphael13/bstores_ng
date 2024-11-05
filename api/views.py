@@ -3,12 +3,16 @@
 """
 
 from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.pagination import PageNumberPagination
 from . import serializers as s
 from . import models as m
 
+class Pagination(PageNumberPagination):
+    page_size = 10
 class ProductViewSet(ReadOnlyModelViewSet):
     queryset = m.Product.objects.select_related("category").prefetch_related("sizes", "colours")
     serializer_class = s.ProductSerializer
+    pagination_class = Pagination
 
     def filter_queryset(self, queryset):
         query = self.request.query_params

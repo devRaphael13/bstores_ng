@@ -153,8 +153,3 @@ UNFOLD = {
     "SITE_TITLE": "Bstores ng",
     "SITE_HEADER": "Bstores ng"
 }
-
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
-}
