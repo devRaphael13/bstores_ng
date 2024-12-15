@@ -8,7 +8,7 @@ from . import serializers as s
 from . import models as m
 
 class Pagination(PageNumberPagination):
-    page_size = 10
+    page_size = 12
 class ProductViewSet(ReadOnlyModelViewSet):
     queryset = m.Product.objects.select_related("category").prefetch_related("sizes", "colours")
     serializer_class = s.ProductSerializer
